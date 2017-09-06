@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Configuration>
+<Configuration status="info" monitorInterval="5">
+    <Appenders>
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout
+                    pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5p %c{2}(%F:%L) - %m%n" />
+        </Console>
+
+        <RollingFile name="fixedTimeFileAppender" fileName="${sys:index.log.home}/restClient.log"
+                     filePattern="${sys:index.log.home}/restClient.log.%d{yyyy-MM-dd}.%i.log.gz">
+            <Filters>
+                <!--文件只输出info及以上（onMatch）级别的信息，其它的(onMismatch)直接拒绝-->
+                <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <PatternLayout
+                    pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5p %c{1}(%L) - %m%n" />
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="1024 MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="512" />
+        </RollingFile>
+
+        <Async name="async" bufferSize="512" includeLocation="true">
+            <AppenderRef ref="fixedTimeFileAppender" />
+        </Async>
+    </Appenders>
+    <Loggers>
+        <Logger name="com.wusiq" level="debug" additivity="false">
+            <!--将debug级别的日志交给async和console打印-->
+            <AppenderRef ref="async" />
+            <AppenderRef ref="console" />
+        </Logger>
+
+
+        <Root level="info">
+            <AppenderRef ref="async" />
+        </Root>
+    </Loggers>
+</Configuration>

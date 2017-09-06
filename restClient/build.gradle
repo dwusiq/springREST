@@ -1,0 +1,74 @@
+group 'com.wusiq'
+version '1.0'
+
+apply plugin: 'java'
+apply plugin: 'war'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+def defaultEncoding = 'UTF-8'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+List servlet = ['javax.servlet:javax.servlet-api:3.1.0']
+
+List apache_commons = [
+        /*处理常用的编码方法的工具类包*/
+        "commons-codec:commons-codec:1.9",
+        /*针对开发IO流功能的工具类库*/
+        "commons-io:commons-io:2.5",
+        /*支持操作JAVA BEAN的工具包*/
+        "commons-beanutils:commons-beanutils:1.9.3"
+]
+
+/*junit单元测试支持包*/
+List junit = ["junit:junit:4.12"]
+
+def spring_version="4.3.10.RELEASE"
+List spring =[
+        "org.springframework:spring-core:$spring_version",//spring核心包
+        "org.springframework:spring-beans:$spring_version",//spring的bean支持包
+        "org.springframework:spring-aop:$spring_version",//spring aop支持包
+        "org.springframework:spring-context:$spring_version",//为Spring核心提供了大量扩展
+        "org.springframework:spring-context-support:$spring_version",
+        "org.springframework:spring-web:$spring_version",//web开发需要的核心包
+        "org.springframework:spring-orm:$spring_version",//对ORM框架的支持包
+        "org.springframework:spring-aspects:$spring_version",//面向切面支持包
+        "org.springframework:spring-webmvc:$spring_version",//webmvc支持包
+        "org.springframework:spring-test:$spring_version"//测试类支持包
+]
+
+
+/*面向切面支持包*/
+List aspectj = ["org.aspectj:aspectjrt:1.8.9"]
+
+/*日志支持包*/
+List logger = [
+        'org.apache.logging.log4j:log4j-api:2.1',
+        'org.apache.logging.log4j:log4j-core:2.1',
+        'org.apache.logging.log4j:log4j-slf4j-impl:2.1',
+        'org.apache.logging.log4j:log4j-web:2.1',
+        'org.slf4j:jcl-over-slf4j:1.7.12'
+]
+
+/*参数校验支持包*/
+List validation = ["org.hibernate:hibernate-validator:5.4.1.Final"]
+
+/*spring的JSON字符串mapping映射支持包*/
+List jackson = [
+        'com.fasterxml.jackson.core:jackson-core:2.9.0',
+        'com.fasterxml.jackson.core:jackson-databind:2.9.0',
+        'com.fasterxml.jackson.core:jackson-annotations:2.9.0',
+        'net.sf.json-lib:json-lib:2.4:jdk15'
+]
+
+/*Json处理工具包*/
+List fastjson = ["com.alibaba:fastjson:1.2.33"]
+
+dependencies {
+    compile apache_commons,junit,spring,servlet,logger,aspectj,validation,fastjson,jackson
+    runtime apache_commons,spring,servlet,logger,aspectj,validation,fastjson,jackson
+}
