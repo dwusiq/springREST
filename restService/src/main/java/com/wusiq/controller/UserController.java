@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.wusiq.entity.UserEntity;
 import com.wusiq.base.BaseController;
 import com.wusiq.base.BaseRspEntity;
-import com.wusiq.utils.ConstantRetCode;
+import com.wusiq.utils.ConstantCode;
 import com.wusiq.utils.RestServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +27,7 @@ public class UserController extends BaseController {
     public BaseRspEntity getUserById(@PathVariable long id){
         LOGGER.info("getUserById userId:"+id);
         if(id!=1){
-            throw new RestServiceException(ConstantRetCode.QUERY_NO_DATA);
+            throw new RestServiceException(ConstantCode.QUERY_NO_DATA);
         }
 
         //返回结果

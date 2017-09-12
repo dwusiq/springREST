@@ -4,7 +4,7 @@ package com.wusiq.utils;
  * REST服务端的错误类常量
  * 0成功   1000~1999系统错误  2000~2999用户错误   3000~3999一般异常
  */
-public class ConstantRetCode {
+public class ConstantCode {
     /**
      * 1000~1999
      */
