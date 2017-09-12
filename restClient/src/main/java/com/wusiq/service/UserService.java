@@ -1,6 +1,8 @@
 package com.wusiq.service;
 
 import com.wusiq.base.RestServiceRspEntity;
+import com.wusiq.entity.UserEntity;
+import org.springframework.http.ResponseEntity;
 
 
 /**
@@ -8,4 +10,5 @@ import com.wusiq.base.RestServiceRspEntity;
  */
 public interface UserService {
     RestServiceRspEntity queryById(Long id);
+    ResponseEntity<UserEntity> addUser(UserEntity user);
 }

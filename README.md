@@ -12,6 +12,8 @@
 12、返回类的基类；
 13、Assert断言；
 14、BeanUtils.populate(user,map)[map转换成javabean]；
-15、
+15、@RequestBody
+16、REST服务端获取当前uri
+17、REST服务端设置头信息
 
 

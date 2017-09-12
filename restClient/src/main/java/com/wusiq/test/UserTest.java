@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.ReflectUtils;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.ContextHierarchy;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -21,6 +22,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -42,7 +44,7 @@ public class UserTest {
     private UserService userServiceImpl;
 
     /**
-     * 测试添加方法
+     * 测试查询方法
      */
     @Test
     public void testQueryUserById() throws Exception {
@@ -60,6 +62,29 @@ public class UserTest {
         Assert.assertTrue(user.getId()==1);
         Assert.assertEquals(user.getUserName(),"wusiq");
         Assert.assertTrue(user.getAge()==12);
+    }
+
+    /**
+     * 测试添加方法
+     */
+    @Test
+    public void testAddUser() throws Exception {
+        UserEntity user = new UserEntity();
+        user.setId(14L);
+
+
+        ResponseEntity<UserEntity> result = userServiceImpl.addUser(user);
+        LOGGER.info("result:{}",JSON.toJSONString(result));
+
+        //下面是自定义的结果判断
+        Assert.assertNotNull(result);
+      //  List<String> uri = result.getHeaders().get("uriStr");
+
+        UserEntity userB = result.getBody();
+        LOGGER.info("user id:{},name:{},age:{}",userB.getId(),userB.getUserName(),userB.getAge());
+        Assert.assertTrue(userB.getId()==14L);
+        Assert.assertEquals(userB.getUserName(),"wicker");
+        Assert.assertTrue(userB.getAge()==16);
     }
 
     @Before

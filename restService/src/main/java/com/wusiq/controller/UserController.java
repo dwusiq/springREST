@@ -8,11 +8,15 @@ import com.wusiq.utils.ConstantCode;
 import com.wusiq.utils.RestServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import java.net.URI;
 
 /**
  * 用户管理控制器
@@ -36,5 +40,29 @@ public class UserController extends BaseController {
         bre.setData(ue);
         LOGGER.info("response:{}", JSON.toJSONString(bre));
         return bre;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/addUser",method = RequestMethod.POST,consumes = "application/json")
+    public ResponseEntity<UserEntity> addUser(@RequestBody UserEntity userEntity, UriComponentsBuilder ucb){
+        LOGGER.info("getUrl...");
+
+        UriComponents uriComponents = ucb.path("/").path("test").path("/").path("newPath").build();
+        String uriStr = uriComponents.toString();
+        LOGGER.info("uri:"+uriStr);
+
+       // URI locationUri = uriComponents.toUri();
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("uriStr:",uriStr);
+
+        UserEntity user = new UserEntity();
+        user.setId(userEntity.getId());
+        user.setAge(16);
+        user.setUserName("wicker");
+
+        ResponseEntity<UserEntity> responseEntity = new ResponseEntity<UserEntity>(user,headers, HttpStatus.OK);
+
+        LOGGER.info("response:{}", JSON.toJSONString(responseEntity));
+        return responseEntity;
     }
 }
